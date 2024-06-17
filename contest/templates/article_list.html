@@ -1,0 +1,45 @@
+<!-- contest/templates/contest/article_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Article List{% endblock %}
+
+{% block content %}
+<h2>Article List</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Slug</th>
+            <th>Author</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            <td>{{ article.title }}</td>
+            <td>{{ article.slug }}</td>
+            <td>{{ article.author.username }}</td>
+            <td>
+                <a href="{% url 'view_article' article.slug %}">View</a>
+                <a href="{% url 'edit_article' article.id %}">Edit</a>
+                <form method="post" action="{% url 'delete_article' article.id %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this article?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'create_article' %}">Create New Article</a>
+{% endblock %}

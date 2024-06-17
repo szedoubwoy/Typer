@@ -1,0 +1,31 @@
+<!-- contest/templates/contest/edit_points.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit Points</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="user_id">Select User:</label>
+    <select name="user_id" id="user_id">
+        {% for user in users %}
+        <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+    </select>
+
+    <div>
+        <h3>Add Points</h3>
+        <label for="points_to_add">Points to Add:</label>
+        <input type="number" name="points_to_add" id="points_to_add" min="0">
+    </div>
+
+    <div>
+        <h3>Subtract Points</h3>
+        <label for="points_to_subtract">Points to Subtract:</label>
+        <input type="number" name="points_to_subtract" id="points_to_subtract" min="0">
+    </div>
+
+    <button type="submit">Save Changes</button>
+</form>
+{% endblock %}

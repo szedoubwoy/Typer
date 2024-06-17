@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Contest{% endblock %}
+
+{% block content %}
+<h1>Turniej Typera UEFA EURO 2024</h1>
+<div class="card">
+    <img src="{% static 'images/brand2024-2.jpg' %}" alt="UEFA EURO 2024" class="hero-image">
+    <ul>
+        {% for match in matches %}
+        <li>{{ match.home_team }} vs {{ match.away_team }} - {{ match.date }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

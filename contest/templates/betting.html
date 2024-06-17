@@ -1,0 +1,109 @@
+<!-- contest/templates/betting.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Dostępne mecze:</h2>
+{% if available_matches %}
+    <div class="card">
+        <table class="table centered">
+            <thead>
+                <tr>
+                    <th>Gospodarz</th>
+                    <th>Gość</th>
+                    <th>Data</th>
+                    <th>Typ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in available_matches %}
+                <tr>
+                    <td>{{ match.home_team }}</td>
+                    <td>{{ match.away_team }}</td>
+                    <td>{{ match.date }}</td>
+                    <td>
+                        <form method="post" class="bet-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="place_bet" value="{{ match.id }}">
+                            <div class="bet-inputs">
+                                <label for="home_team_score_{{ match.id }}">Wynik gospodarza:</label>
+                                <input type="number" name="home_team_score_{{ match.id }}" id="home_team_score_{{ match.id }}">
+                                <label for="away_team_score_{{ match.id }}">Wynik gościa:</label>
+                                <input type="number" name="away_team_score_{{ match.id }}" id="away_team_score_{{ match.id }}">
+                            </div>
+                            <button type="submit" class="button">Potwierdź</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p class="centered">Nie masz aktualnie meczów do typowania.</p>
+{% endif %}
+
+<h2>Moje Typy</h2>
+{% if my_bets %}
+<table class="table centered">
+    <thead>
+        <tr>
+            <th>Gospodarz</th>
+            <th>Gość</th>
+            <th>Wynik gospodarza</th>
+            <th>Wynik gościa</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bet in my_bets %}
+        <tr>
+            <td>{{ bet.match.home_team }}</td>
+            <td>{{ bet.match.away_team }}</td>
+            <td>{{ bet.home_team_score }}</td>
+            <td>{{ bet.away_team_score }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p>Nie wytypowałeś jeszcze żadnego meczu.</p>
+{% endif %}
+
+<h2>Czarny Koń</h2>
+{% if underdog %}
+    <div class="card">
+        <p>Twój czarny koń turnieju: <strong>{{ underdog.team }}</strong></p>
+    </div>
+{% else %}
+    <form method="post">
+        {% csrf_token %}
+        {{ underdog_form.as_p }}
+        <button type="submit" name="confirm_underdog" class="button">Potwierdź swój typ</button>
+    </form>
+{% endif %}
+
+<h2>Król strzelców</h2>
+{% if top_scorer %}
+    <div class="card">
+        <p>Twój król strzelców: <strong>{{ top_scorer.player }}</strong></p>
+    </div>
+{% else %}
+    <form method="post">
+        {% csrf_token %}
+        {{ top_scorer_form.as_p }}
+        <button type="submit" name="confirm_top_scorer" class="button">Potwierdź swój typ</button>
+    </form>
+{% endif %}
+
+<h2>Zwycięzca Turnieju</h2>
+{% if tournament_winner %}
+    <div class="card">
+        <p>Twój zwyciezca turnieju: <strong>{{ tournament_winner.team.name }}</strong></p>
+    </div>
+{% else %}
+    <form method="post">
+        {% csrf_token %}
+        {{ winner_form.as_p }}
+        <button type="submit" name="confirm_winner" class="button">Potwierdź swój typ</button>
+    </form>
+{% endif %}
+{% endblock %}

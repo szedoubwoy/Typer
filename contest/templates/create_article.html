@@ -1,0 +1,23 @@
+<!-- contest/templates/contest/create_article.html -->
+{% extends 'base.html' %}
+
+{% block title %}Create Article{% endblock %}
+
+{% block content %}
+<h2>Create Article</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Article</button>
+</form>
+<a href="{% url 'article_list' %}">Back to Article List</a>
+{% endblock %}

@@ -1,0 +1,15 @@
+<!-- contest/templates/contest/rules.html -->
+{% extends 'base.html' %}
+
+{% block title %}Rules{% endblock %}
+
+{% block content %}
+<h2>Rules</h2>
+
+{% if article %}
+    <h3>{{ article.title }}</h3>
+    <div>{{ article.content|linebreaks }}</div>
+{% else %}
+    <p>No rules available.</p>
+{% endif %}
+{% endblock %}

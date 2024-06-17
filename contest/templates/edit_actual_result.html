@@ -1,0 +1,16 @@
+<!-- contest/templates/contest/edit_actual_result.html -->
+{% extends 'base.html' %}
+
+{% block title %}Edit Result{% endblock %}
+
+{% block content %}
+<h2>Edit Result for {{ match.home_team }} vs {{ match.away_team }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+<a href="{% url 'actual_results' %}">Back to Actual Results</a>
+{% endblock %}

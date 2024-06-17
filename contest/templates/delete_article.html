@@ -1,0 +1,16 @@
+<!-- contest/templates/contest/delete_article.html -->
+{% extends 'base.html' %}
+
+{% block title %}Delete Article{% endblock %}
+
+{% block content %}
+<h2>Delete Article</h2>
+
+<p>Are you sure you want to delete the article "{{ article.title }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete article</button>
+</form>
+<a href="{% url 'article_list' %}">Cancel</a>
+{% endblock %}

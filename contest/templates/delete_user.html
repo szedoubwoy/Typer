@@ -1,0 +1,16 @@
+<!-- contest/templates/contest/delete_user.html -->
+{% extends 'base.html' %}
+
+{% block title %}Delete User{% endblock %}
+
+{% block content %}
+<h2>Delete User</h2>
+
+<p>Are you sure you want to delete the user "{{ user.username }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete user</button>
+</form>
+<a href="{% url 'user_list' %}">Cancel</a>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit Bet Status</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="user-bets">
+        {% for user, bets in user_bets.items %}
+            <h3>{{ user.username }}</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Match</th>
+                        <th>Home Team Score</th>
+                        <th>Away Team Score</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bet in bets %}
+                    <tr>
+                        <td>{{ bet.match }}</td>
+                        <td>{{ bet.home_team_score }}</td>
+                        <td>{{ bet.away_team_score }}</td>
+                        <td>
+                            <input type="hidden" name="bet_id" value="{{ bet.id }}">
+                            <select name="status">
+                                {% for value, label in status_choices %}
+                                    <option value="{{ value }}" {% if bet.status == value %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+        {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+{% endblock %}

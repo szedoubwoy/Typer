@@ -1,0 +1,12 @@
+<!-- contest/templates/contest/create_match.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Create New Match</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Match</button>
+</form>
+{% endblock %}

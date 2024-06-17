@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Leaderboard{% endblock %}
+
+{% block content %}
+<h2>Tabela Typerów</h2>
+
+{% if leaderboard %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>Miejsce</th>
+        <th>Użytkownik</th>
+        <th>Punkty</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entry in leaderboard %}
+    <tr class="{% if entry.rank == 1 %}exact{% endif %}">
+        <td>{{ entry.rank }}</td>
+        <td>{{ entry.user.username }}</td>
+        <td>{{ entry.points }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Leaderboard is empty</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% load static %}
+{% load article_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My Site{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a href="{% url 'home' %}">Strona główna</a></li>
+        <li><a href="{% url 'results' %}">Wyniki</a></li>
+        <li><a href="{% url 'leaderboard' %}">Tabela Typerów</a></li>
+        <li><a href="{% url 'user_predictions' %}">Typy Użytkowników</a></li>
+        {% get_articles as articles %}
+        {% for article in articles %}
+        <li><a href="{% url 'view_article' article.slug %}">{{ article.title }}</a></li>
+        {% endfor %}
+        {% if user.is_authenticated %}
+        {% if not user.is_superuser %}
+        <li><a href="{% url 'betting' %}">Typuj spotkania</a></li>
+        {% endif %}
+        {% if user.is_superuser %}
+        <li><a href="{% url 'create_user' %}">Create User</a></li>
+        <li><a href="{% url 'create_match' %}">Create Match</a></li>
+        <li><a href="{% url 'edit_points' %}">Edit Points</a></li>
+        <li><a href="{% url 'user_list' %}">User List</a></li>
+        <li><a href="{% url 'article_list' %}">Articles</a></li>
+        <li><a href="{% url 'actual_results' %}">Actual Results</a></li>
+        <li><a href="{% url 'edit_bet_status' %}">Edit Bet Statuses</a></li>
+        {% endif %}
+        <li><a href="{% url 'profile' %}">Profil</a></li>
+        <li>
+            <a href="#" id="logout-link" onclick="document.getElementById('logout-form').submit(); return false;">Wyloguj
+                się</a>
+            <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
+                {% csrf_token %}
+            </form>
+        </li>
+        {% else %}
+        <li><a href="{% url 'login' %}">Zaloguj się</a></li>
+        {% endif %}
+    </ul>
+</nav>
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+<footer class="footer">
+    <p>UEFA EURO 2024</p>
+</footer>
+</body>
+</html>

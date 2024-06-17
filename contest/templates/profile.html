@@ -1,0 +1,12 @@
+<!-- contest/templates/contest/profile.html -->
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2>Panel użytkownika</h2>
+<div class="card">
+    <h1>{{ user.username }}</h1>
+    <p>{{ user.email }}</p>
+</div>
+{% endblock %}

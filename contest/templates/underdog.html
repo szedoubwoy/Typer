@@ -1,0 +1,16 @@
+<!-- contest/templates/contest/dark_horse.html -->
+{% extends 'base.html' %}
+
+{% block title %}Select Dark Horse{% endblock %}
+
+{% block content %}
+<h2>Select Your Dark Horse</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+<a href="{% url 'profile' %}">Back to Profile</a>
+{% endblock %}

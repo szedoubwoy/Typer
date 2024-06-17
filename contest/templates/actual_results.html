@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Actual Results</h2>
+
+<h3>Matches</h3>
+<form method="post">
+    {% csrf_token %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Match</th>
+                <th>Home Team Score</th>
+                <th>Away Team Score</th>
+                <th>Final Score</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for match in matches %}
+                <tr>
+                    <td>{{ match.home_team }} vs {{ match.away_team }}</td>
+                    <td>
+                        <input type="number" name="home_team_score_{{ match.id }}" value="{{ match.actual_home_team_score }}" class="input-score">
+                    </td>
+                    <td>
+                        <input type="number" name="away_team_score_{{ match.id }}" value="{{ match.actual_away_team_score }}" class="input-score">
+                    </td>
+                    <td>
+                        <input type="checkbox" name="final_score_{{ match.id }}" {% if match.final_score %}checked{% endif %}>
+                    </td>
+                    <td>
+                        <button type="submit" name="save_match" value="{{ match.id }}" class="button">Save</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+
+<h3>Tournament Winner</h3>
+<form method="post">
+    {% csrf_token %}
+    <select name="winner_team" class="form-select">
+        {% for team in teams %}
+            <option value="{{ team.name }}" {% if selected_winner and selected_winner.name == team.name %}selected{% endif %}>
+                {{ team.name }}
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit" name="save_winner" class="button">Save</button>
+</form>
+
+<h3>Top Scorer</h3>
+<form method="post">
+    {% csrf_token %}
+    <select name="top_scorer" class="form-select">
+        <option value="">Select Top Scorer</option>
+        {% for player in top_scorers %}
+            <option value="{{ player.id }}" {% if selected_top_scorer and selected_top_scorer.player == player.player_name %}selected{% endif %}>
+                {{ player.player_name }} ({{ player.country }})
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit" name="save_top_scorer" class="button">Save</button>
+</form>
+
+{% endblock %}

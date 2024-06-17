@@ -1,0 +1,23 @@
+<!-- contest/templates/contest/create_user.html -->
+{% extends 'base.html' %}
+
+{% block title %}Create User{% endblock %}
+
+{% block content %}
+<h2>Create a New User</h2>
+
+{% if messages %}
+    {% for message in messages %}
+         <div class="{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create User</button>
+</form>
+<a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}
