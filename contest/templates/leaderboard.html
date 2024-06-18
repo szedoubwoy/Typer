@@ -3,28 +3,32 @@
 {% block title %}Leaderboard{% endblock %}
 
 {% block content %}
-<h2>Tabela Typerów</h2>
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title text-center">Tabela Typerów</h2>
 
-{% if leaderboard %}
-<table class="table">
-    <thead>
-    <tr>
-        <th>Miejsce</th>
-        <th>Użytkownik</th>
-        <th>Punkty</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for entry in leaderboard %}
-    <tr class="{% if entry.rank == 1 %}exact{% endif %}">
-        <td>{{ entry.rank }}</td>
-        <td>{{ entry.user.username }}</td>
-        <td>{{ entry.points }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<p>Leaderboard is empty</p>
-{% endif %}
+        {% if leaderboard %}
+        <table class="table table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Miejsce</th>
+                <th scope="col">Użytkownik</th>
+                <th scope="col">Punkty</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entry in leaderboard %}
+            <tr class="{% if entry.rank == 1 %}table-success{% endif %}">
+                <td>{{ entry.rank }}</td>
+                <td>{{ entry.user.username }}</td>
+                <td>{{ entry.points }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-center">Leaderboard jest pusty</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

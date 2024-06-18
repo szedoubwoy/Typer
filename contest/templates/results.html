@@ -3,60 +3,67 @@
 {% block title %}Results{% endblock %}
 
 {% block content %}
-<h2>Wyniki</h2>
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Wyniki</h2>
 
-<div class="card">
-    <table class="results-table">
-        <thead>
-            <tr>
-                <th>Gospodarze</th>
-                <th>Wynik</th>
-                <th>Goście</th>
-                <th>Data</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for match in matches %}
-            <tr>
-                <td class="{% if match.final_score %}{% if match.actual_home_team_score > match.actual_away_team_score %}winner{% elif match.actual_home_team_score < match.actual_away_team_score %}loser{% else %}draw{% endif %}{% endif %}">
-                    {{ match.home_team }}
-                </td>
-                <td>
-                    {% if match.final_score %}
-                        {{ match.actual_home_team_score }}
-                    {% else %}
-                        0
-                    {% endif %} -
-                    {% if match.final_score %}
-                        {{ match.actual_away_team_score }}
-                    {% else %}
-                        0
-                    {% endif %}
-                </td>
-                <td class="{% if match.final_score %}{% if match.actual_home_team_score < match.actual_away_team_score %}winner{% elif match.actual_home_team_score > match.actual_away_team_score %}loser{% else %}draw{% endif %}{% endif %}">
-                    {{ match.away_team }}
-                </td>
-                <td>
-                    <small>{{ match.date|date:"j F Y, H:i" }}</small>
-                </td>
-                <td>
-                    {% if match.final_score %}
-                        <span class="final"><i class="fa-solid fa-futbol"></i></span>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-
-{% if tournament_results %}
-    <div class="final-results-section">
-        <p>Zwycięzca Euro: <strong>{% if tournament_results.winner_team %} {{ tournament_results.winner_team.name }} {% else %} - {% endif %}</strong></p>
-        <p>Król strzelców: <strong>{% if tournament_results.top_scorer %} {{ tournament_results.top_scorer.player }} {% else %} - {% endif %}</strong></p>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover results-table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Gospodarze</th>
+                            <th>Wynik</th>
+                            <th>Goście</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for match in matches %}
+                        <tr>
+                            <td class="{% if match.final_score %}{% if match.actual_home_team_score > match.actual_away_team_score %}table-success{% elif match.actual_home_team_score < match.actual_away_team_score %}table-danger{% else %}table-info{% endif %}{% endif %}">
+                                {{ match.home_team }}
+                            </td>
+                            <td>
+                                {% if match.final_score %}
+                                    {{ match.actual_home_team_score }} - {{ match.actual_away_team_score }}
+                                {% else %}
+                                    0 - 0
+                                {% endif %}
+                            </td>
+                            <td class="{% if match.final_score %}{% if match.actual_home_team_score < match.actual_away_team_score %}table-success{% elif match.actual_home_team_score > match.actual_away_team_score %}table-danger{% else %}table-info{% endif %}{% endif %}">
+                                {{ match.away_team }}
+                            </td>
+                            <td>
+                                <small>{{ match.date|date:"j F Y, H:i" }}</small>
+                            </td>
+                            <td>
+                                {% if match.final_score %}
+                                    <span class="final"><i class="fa-solid fa-futbol"></i></span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Oczekujący</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-{% else %}
-    <p>No tournament results set by admin.</p>
-{% endif %}
+
+    {% if tournament_results %}
+        <div class="card mt-4">
+            <div class="card-body">
+                <p class="card-text"><strong>Zwycięzca Euro:</strong> {% if tournament_results.winner_team %} {{ tournament_results.winner_team.name }} {% else %} - {% endif %}</p>
+                <p class="card-text"><strong>Król strzelców:</strong> {% if tournament_results.top_scorer %} {{ tournament_results.top_scorer.player }} {% else %} - {% endif %}</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info mt-4" role="alert">
+            No tournament results set by admin.
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

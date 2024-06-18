@@ -1,80 +1,87 @@
 {% extends 'base.html' %}
 
+{% block title %}Wszystkie typy{% endblock %}
+
 {% block content %}
-<h2>Wszystkie typy</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">Wszystkie typy</h2>
 
-<div class="user-predictions">
-    {% for data in user_data %}
-    <div class="card">
-        <h3>{{ data.user.username }}</h3>
-
-        <h4>Mecze:</h4>
-        <table class="prediction-table">
-            <thead>
-            <tr>
-                <th>Gospodarze</th>
-                <th>Gole gospodarzy</th>
-                <th>Gole gości</th>
-                <th>Goście</th>
-                <th>Wynik</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for bet in data.bets %}
-            <tr class="
-                            {% if bet.status == 1 %}
-                                wrong-result
-                            {% elif bet.status == 2 %}
-                                correct-result
-                            {% elif bet.status == 3 %}
-                                 exact-score
-                            {% endif %}
-                        ">
-                <td>{{ bet.match.home_team }}</td>
-                <td>{{ bet.home_team_score }}</td>
-                <td>{{ bet.away_team_score }}</td>
-                <td>{{ bet.match.away_team }}</td>
-                <td>
-                    {% if bet.status == 1 %}
-                    Nietrafiony wynik
-                    {% elif bet.status == 2 %}
-                    Trafiony rezultat
-                    {% elif bet.status == 3 %}
-                    Trafiony dokładny wynik
+    <div class="user-predictions">
+        {% for data in user_data %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title">{{ data.user.username }}</h3>
+            </div>
+            <div class="card-body">
+                <h4 class="card-subtitle mb-3">Mecze</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover prediction-table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Gospodarze</th>
+                                <th>Gole gospodarzy</th>
+                                <th>Gole gości</th>
+                                <th>Goście</th>
+                                <th>Wynik</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bet in data.bets %}
+                            <tr class="
+                                {% if bet.status == 1 %}
+                                    table-danger
+                                {% elif bet.status == 2 %}
+                                    table-warning
+                                {% elif bet.status == 3 %}
+                                    table-success
+                                {% endif %}
+                            ">
+                                <td>{{ bet.match.home_team }}</td>
+                                <td>{{ bet.home_team_score }}</td>
+                                <td>{{ bet.away_team_score }}</td>
+                                <td>{{ bet.match.away_team }}</td>
+                                <td>
+                                    {% if bet.status == 1 %}
+                                    Nietrafiony wynik
+                                    {% elif bet.status == 2 %}
+                                    Trafiony rezultat
+                                    {% elif bet.status == 3 %}
+                                    Trafiony dokładny wynik
+                                    {% else %}
+                                    -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <p>Czarny koń:
+                    {% if data.underdog %}
+                    <span><strong>{{ data.underdog.team }}</strong></span>
                     {% else %}
-                    -
+                    <span><strong>Brak wyboru</strong></span>
                     {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </p>
 
-        <p>Czarny koń:
-            {% if data.underdog %}
-            <span><strong>{{ data.underdog.team }}</strong></span>
-            {% else %}
-            <span><strong>Brak wyboru</strong></span>
-            {% endif %}
-        </p>
+                <p>Król strzelców:
+                    {% if data.top_scorer %}
+                    <span><strong>{{ data.top_scorer.player }}</strong></span>
+                    {% else %}
+                    <span><strong>Brak wyboru</strong></span>
+                    {% endif %}
+                </p>
 
-        <p>Król strzelców:
-            {% if data.top_scorer %}
-            <span><strong>{{ data.top_scorer.player }}</strong></span>
-            {% else %}
-            <span><strong>Brak wyboru</strong></span>
-            {% endif %}
-        </p>
-
-        <p>Zwycięzca turnieju:
-            {% if data.tournament_winner %}
-            <span><strong>{{ data.tournament_winner.team }}</strong></span>
-            {% else %}
-            <span><strong>Brak wyboru</strong></span>
-            {% endif %}
-        </p>
+                <p>Zwycięzca turnieju:
+                    {% if data.tournament_winner %}
+                    <span><strong>{{ data.tournament_winner.team }}</strong></span>
+                    {% else %}
+                    <span><strong>Brak wyboru</strong></span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    <hr>
-    {% endfor %}
 </div>
 {% endblock %}
