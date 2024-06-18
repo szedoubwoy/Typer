@@ -11,6 +11,10 @@
   ],
   "routes": [
     {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "typer_euro2024/wsgi.py"
     }
