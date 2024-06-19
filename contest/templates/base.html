@@ -15,7 +15,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container bg-dark border-0">
         <a class="navbar-brand" href="{% url 'home' %}">TYPER EURO 2024</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
@@ -71,21 +72,22 @@
                     <a class="nav-link" href="{% url 'profile' %}">Profil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" id="logout-link" onclick="document.getElementById('logout-form').submit(); return false;">Wyloguj się</a>
+                    <a class="nav-link" href="#" id="logout-link"
+                       onclick="document.getElementById('logout-form').submit(); return false;">Wyloguj się</a>
                     <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
                         {% csrf_token %}
                     </form>
                 </li>
                 {% else %}
-                <!--<li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Zaloguj się</a>
-                </li>-->
+                </li>
                 {% endif %}
             </ul>
         </div>
     </div>
 </nav>
-<div class="container mt-5">
+<div class="container-fluid container-lg mt-5">
     {% block content %}{% endblock %}
 </div>
 <footer class="footer bg-dark text-light text-center py-3 mt-5">
@@ -98,6 +100,7 @@
         event.preventDefault();
         document.getElementById('logout-form').submit();
     });
+
 </script>
 </body>
 </html>
