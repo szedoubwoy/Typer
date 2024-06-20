@@ -58,15 +58,8 @@ h1, h2 {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    text-align:center;
+    text-align: center;
 }
-
-@media (max-width: 800px) {
- .card {
-    padding: 20px 0 20px 0 !important;
-    }
-}
-
 /*
 table {
     width: 100%;
@@ -361,6 +354,6 @@ h1, h2 {
 }
 
 .card-body {
-    padding: 0 !important;
-}
+    padding 0; !important;
 
+}

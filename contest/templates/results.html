@@ -7,7 +7,7 @@
     <h2 class="mb-4 text-center">Wyniki</h2>
 
     <div class="card">
-        <div class="card-body">
+        <div class="card-body mt-4">
             <div class="table-responsive">
                 <table class="table table-bordered table-hover results-table">
                     <thead class="thead-dark">
@@ -55,7 +55,7 @@
 
     {% if tournament_results %}
         <div class="card mt-4">
-            <div class="card-body">
+            <div class="card-body mt-4">
                 <p class="card-text"><strong>Zwycięzca Euro:</strong> {% if tournament_results.winner_team %} {{ tournament_results.winner_team.name }} {% else %} - {% endif %}</p>
                 <p class="card-text"><strong>Król strzelców:</strong> {% if tournament_results.top_scorer %} {{ tournament_results.top_scorer.player }} {% else %} - {% endif %}</p>
             </div>

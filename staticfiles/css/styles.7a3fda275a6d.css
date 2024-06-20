@@ -63,7 +63,7 @@ h1, h2 {
 
 @media (max-width: 800px) {
  .card {
-    padding: 20px 0 20px 0 !important;
+    padding:   padding: 20px 0 20px 0;
     }
 }
 
